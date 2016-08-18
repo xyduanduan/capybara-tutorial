@@ -4,20 +4,20 @@ RSpec.feature 'post feature', type: :feature do
   scenario 'create post' do
     view_posts
 
-    before_create_post_list
+    post_list_before_create
 
     create_post
 
     show_post
 
-    after_create_post_list
+    post_list_after_create
   end
 
   def view_posts
     visit '/posts'
   end
 
-  def before_create_post_list
+  def post_list_before_create
     on_page_with(:post_list, :post_top_10_list) do |page|
 
       load_top10_posts
@@ -46,7 +46,7 @@ RSpec.feature 'post feature', type: :feature do
           tests and comes with Rack::Test and Selenium support built in.
           WebKit is supported through an external gem.
       eos
-      
+
       page.perform :create_post, title, post_content
     end
   end
@@ -58,7 +58,7 @@ RSpec.feature 'post feature', type: :feature do
     end
   end
 
-  def after_create_post_list
+  def post_list_after_create
     on_page_with(:post_list, :post_top_10_list) do |page|
 
       load_top10_posts
