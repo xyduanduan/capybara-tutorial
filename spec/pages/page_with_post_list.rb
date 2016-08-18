@@ -2,31 +2,31 @@ module PageWithPostList
 	include Gizmo::PageMixin
 
 	def valid?
-		has_css?('.parent .left')
+		has_css?('.parent #posts')
 	end
 
-	def posts_in_list
-		find('.parent .left table').find('tbody').all('tr')
+	def post_page_title
+		find("#posts").find('h1').text
+	end
+
+	def posts_list
+		find("#posts").find("table#posts_list").find("tbody").all("tr")
+	end
+
+	def latest_post_title
+		posts_list.first.find("td:nth-child(1)").text
+	end
+
+	def latest_post_content
+		posts_list.first.find("td:nth-child(2)").text
 	end
 
 	def new_post_link
-		find('.parent .left a[href="/posts/new"]')
+		find("#posts").find("a#new_post")
 	end
 
-	def create_post_button
-		find('.actions input[value="Create Post"]')
-	end
+	define_action :new_post do 
+		new_post_link.click
+  end
 
-	def notice_message
-		find('#notice').text
-	end
-
-	def back_link
-		find('a[href="/posts"]')
-	end
-
-	define_action :fill_post do |title, content|
-		fill_in('post_title', with: title)
-		fill_in('post_content', with: content)
-	end
 end
